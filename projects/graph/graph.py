@@ -193,8 +193,10 @@ class Graph:
                 if neighbor not in visited:
                     new_path = list(current_path) # ? Make copy of path
                     new_path.append(neighbor) # ? Append the neighbor
+                    the_recursive_call = self.dfs_recursive(new_path, destination_vertex, visited)
                     
-                    self.dfs_recursive(new_path, destination_vertex, visited)
+                    if the_recursive_call: # * Prevents None from being returned before the correct path!
+                        return the_recursive_call
 
 
 if __name__ == '__main__':
