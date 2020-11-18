@@ -4,6 +4,7 @@ def earliest_ancestor(ancestors, starting_node):
     # ? Find its parent
     # ? Repeat until there are no more parents
     queue = []
+    previous_parent = None
     earliest = -1
     
     for ancestor in ancestors:
@@ -13,17 +14,28 @@ def earliest_ancestor(ancestors, starting_node):
     # print("queue before loop:", queue)
     
     while len(queue) > 0:
-        # print("queue in loop:", queue)
-        current_tup = queue.pop(0)
-        # print("current_tup", current_tup)
+        print("\nqueue in loop:", queue)
         
+        current_tup = queue.pop(0)
+        print("current_tup", current_tup)
+        
+        previous_parent = earliest
         earliest = current_tup[0]
-        # print("earliest", earliest)
+        print("earliest", earliest)
+        
+        
         
         for ancestor in ancestors:
             if ancestor[1] == current_tup[0]:
                 queue.append(ancestor)
-                
+        
+        print("queue len after pop", len(queue))
+        
+        if len(queue) == 0:
+            if current_tup[0] > previous_parent and previous_parent >= 0:
+                earliest = previous_parent
+                print("I FLIPPED", earliest)
+        
     print("END:", earliest)
     return earliest
 
