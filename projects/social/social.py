@@ -1,4 +1,18 @@
 import random
+from collections import deque
+
+class Queue():
+    def __init__(self):
+        self.queue = deque()
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.popleft()
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
 
 class User:
     def __init__(self, name):
@@ -73,7 +87,10 @@ class SocialGraph:
         
         for friendship in friendships_to_make:
             self.add_friendship(friendship[0], friendship[1])
-                    
+    
+    def get_friends(self, current_friend):
+        return self.friendships[current_friend]
+    
     def get_all_social_paths(self, user_id):
         """
         Takes a user's user_id as an argument
@@ -83,8 +100,42 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
+        
+        # * Hint 1: What kind of graph search guarantees you a shortest path?
+        
+        
+        # * Hint 2: Instead of using a `set` to mark users as visited, you could use a `dictionary`.
+        # * Similar to sets, checking if something is in a dictionary runs in O(1) time.
+        # * If the visited user is the key, what would the value be?
+        
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        
+        q = Queue()
+        visited = {}
+        
+        q.enqueue([user_id])
+
+        while q.size() > 0:
+            # ? get next person in line
+            current_path = q.dequeue()
+            current_person = current_path[-1]
+                    
+            # ? check if we have visited them yet
+            if current_person not in visited:
+                # ? if not, add it our visited set
+                visited[current_person] = current_path
+                
+                # ? Get their friends
+                friends = self.get_friends(current_person)
+
+                for friend in friends:
+                    friend_path = [*current_path] # * [*'list name'] unpacks 'list name' into a new list making a copy
+                    
+                    friend_path.append(friend)
+                    
+                    q.enqueue(friend_path)
+                    
         return visited
 
 
