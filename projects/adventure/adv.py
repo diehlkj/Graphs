@@ -4,6 +4,7 @@ from world import World
 
 import random
 from ast import literal_eval
+from collections import deque
 
 # Load world
 world = World()
@@ -30,6 +31,35 @@ player = Player(world.starting_room)
 traversal_path = []
 
 # * Code Project Here
+
+# ? STACK & QUEUE UTILITY CLASSES
+class Queue():
+    def __init__(self):
+        self.queue = deque()
+    def enqueue(self, value):
+        self.queue.append(value)
+    def dequeue(self):
+        if self.size() > 0:
+            return self.queue.popleft()
+        else:
+            return None
+    def size(self):
+        return len(self.queue)
+    
+class Stack():
+    def __init__(self):
+        self.stack = deque()
+    def push(self, value):
+        self.stack.append(value)
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop()
+        else:
+            return None
+    def size(self):
+        return len(self.stack)
+
+# ? ALL ROOMS GRAPH CLASS
 class AllRooms:
     def __init__(self):
         self.room = {}
@@ -50,17 +80,18 @@ class AllRooms:
     
     # * DFT until no exits other than previous room
     # * Append the direction moved to traversal path each time
-    def dft(self, room_id):
-        pass
-    
-    # * BFT back to first room with an unexplored exit
-    # ? For the traversl paths, check previous graph project for how to return the path taken from starting node to target. Use this to append the whole path taken instead of one move at a time.
-    # ? The 'target' of the BFT will be the first room found with a 'None' value on a cardinal key
-    def bft(self, room_id):
-        pass
-            
+    def dft(self, room_id, cardinal, target_mode = False, path = []):
+        # ? if self.room.length != world.room_graph.length:
+            # ? if not target_mode:
 
-
+            # ? if target_mode:
+        
+        pass
+    # * DFT (with n > e > s > w priority) until dead end, return the route taken and append it to traversal_path.
+    # * THEN
+    # * DFT (with n > e > s > w priority) in 'target mode' to first node with an unexplored cardinal.
+        # ? In 'target mode', the DFT may explore multiple routes that lead to a target. Because of this, the paths taken must be returned and compared before final return and appending to traversal_path.
+        # ? Once target node is found, repeat loop until graph len is equal to 'world len(room_graph)'            
 
 # TRAVERSAL TEST
 visited_rooms = set()
