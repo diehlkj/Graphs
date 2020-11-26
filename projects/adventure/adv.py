@@ -104,6 +104,11 @@ class AllRooms:
                 inner_path.append("n")
                 self.get_complete_path(curr_room_id, "n", inner_path)
 
+            elif "w" in self.room[curr_room_id] and self.room[curr_room_id]["w"] is None:
+                player.travel("w")
+                inner_path.append("w")
+                self.get_complete_path(curr_room_id, "w", inner_path)
+
             elif "e" in self.room[curr_room_id] and self.room[curr_room_id]["e"] is None:
                 player.travel("e")
                 inner_path.append("e")
@@ -113,11 +118,6 @@ class AllRooms:
                 player.travel("s")
                 inner_path.append("s")
                 self.get_complete_path(curr_room_id, "s", inner_path)
-
-            elif "w" in self.room[curr_room_id] and self.room[curr_room_id]["w"] is None:
-                player.travel("w")
-                inner_path.append("w")
-                self.get_complete_path(curr_room_id, "w", inner_path)
             # ? If all exits are visited, return path and search for unvisited.
             else:
                 if len(self.room) == len(room_graph):
@@ -133,8 +133,7 @@ class AllRooms:
         else:
             # ? Returns self.path if all rooms have been fully explored
             self.path.extend(path)
-            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", self.path)
-            return path
+            return
 
     def find_unvisited(self, starting_room, visited=set(), path=[]):
         inner_path = [*path]
