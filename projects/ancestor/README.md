@@ -46,3 +46,14 @@ Clarifications:
 * IDs will always be positive integers.
 * A parent may have any number of children.
 
+1. Describe problem in graph terms
+  - What are our nodes?
+  - What are our edges? (Where are the two connected?)
+  - Is this a directed graph? Cyclic or acyclic?
+
+*DAG: Directed asyclic graph from parent to child or vice versa.*
+
+2. Build our graph, or write getNeighbors()
+
+3. What algorithm to use?
+  - Any traversal, depth or breadth
